@@ -1,0 +1,3 @@
+Tiere
+verbs
+nouns
