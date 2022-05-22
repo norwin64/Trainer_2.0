@@ -20,6 +20,8 @@ BLACK = (0, 0, 0)
 BLUE = (0, 150, 255)
 
 #variables
+screen = "homescreen"
+current_stack = ""
 
 #images
 background = pygame.transform.scale(pygame.image.load(os.path.join("materials", "background.png")), (WIDTH, HEIGHT))
@@ -37,9 +39,18 @@ def show_window():
     root.blit(background_2, (50, 50))
     if EXIT_BUTTON.draw(root):
         quit()
+    if screen == "homescreen":
+        homescreen()
+    elif screen == "stackscreen":
+        stackscreen()
 
+    pygame.display.update()
+
+def homescreen():
+    global screen
+    global current_stack
     # "Your stacks"
-    root.blit(font_h.render("Your stacks:", True, BLACK), (1/10 * WIDTH, 210))
+    root.blit(font_h.render("Your stacks:", True, BLACK), (1 / 10 * WIDTH, 210))
     # Stacks
     with open("elements.txt", "r") as file:
         stacks = file.read().splitlines()
@@ -48,15 +59,14 @@ def show_window():
             spot = 360 + 110 * stacks.index(element)
             BUTTON = Button(1 / 10 * WIDTH, spot, font_2.render(f"*  {element}", True, BLACK), 1)
             if BUTTON.draw(root):
-                root.blit(background_2, (50, 50))
-
+                current_stack = element
+                screen = "stackscreen"
         else:
             if more_stacks.draw(root):
                 print("weitere stacks")
 
-    pygame.display.update()
-
-
+def stackscreen():
+    pass
 
 def quit():
     pygame.display.quit()
