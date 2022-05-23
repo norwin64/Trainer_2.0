@@ -6,6 +6,9 @@ from functions import Button
 import pygame_textinput as pginput
 import csv
 import random as rd
+import pandas as pd
+from datetime import date, timedelta
+
 
 #init
 pygame.init()
@@ -75,14 +78,14 @@ def homescreen():
         screen = "settings_screen"
 
     # "Your stacks"
-    root.blit(font_h.render("Your stacks:", True, BLACK), (1 / 10 * WIDTH, 210))
+    root.blit(font_h.render("Your stacks", True, BLACK), (1 / 10 * WIDTH, 210))
     # Stacks
     with open("elements.txt", "r") as file:
         stacks = file.read().splitlines()
     for element in stacks:
         if stacks.index(element) <= 2:
             spot = 360 + 110 * stacks.index(element)
-            BUTTON = Button(1 / 10 * WIDTH, spot, font_2.render(f"*  {element}", True, BLACK), 1)
+            BUTTON = Button(2 / 10 * WIDTH, spot, font_2.render(f"{element}", True, BLACK), 1)
             if BUTTON.draw(root):
                 current_stack = element
                 screen = "stackscreen"
@@ -99,27 +102,46 @@ def stackscreen():
     root.blit(font_h.render(current_stack, True, BLACK), (1 / 10 * WIDTH, 210))
     root.blit(font_3.render("This stack was created by Norwin at ...", True, GREY), (1 / 10 * WIDTH, 300))
     root.blit(font_1.render("Lernmodi:", True, BLACK), (2/15*WIDTH, 400))
+    set_lists()
+    textinput.value = ""
+    enter = False
     if ELIMINATION_MODE_BUTTON.draw(root):
-        set_lists()
         mode = "elimination"
         screen = "vocab_screen"
     if TRAINING_MODE_BUTTON.draw(root):
         mode = "training"
         screen = "vocab_screen"
+        set_lists()
     if TEST_MODE_BUTTON.draw(root):
-        mode = "test"
-        screen = "vocab_screen"
-
+        if len(unanswered) >= 10:
+            mode = "test"
+            screen = "vocab_screen"
+        else:
+            print("Sry, but the dataset is not big enough")
 def set_lists():
     global unanswered
     global wrong
+    global number_vocabs
+    global screen
+    global mode
     unanswered = []
     wrong = []
+    number_vocabs = 1
     with open(f"{current_stack}.csv", "r") as file:
         reader = csv.DictReader(file)
-        for row in reader:
-            unanswered.append(row)
-    set_vocab()
+        if mode != "training":
+            for row in reader:
+                unanswered.append(row)
+                set_vocab()
+        else:
+            for row in reader:
+                if row.get("date_of_next_question") == str(date.today()):
+                    unanswered.append(row)
+            if len(unanswered) == 0:
+                screen = "all_finished"
+                mode = None
+            else:
+                set_vocab()
 
 def set_vocab():
     global random_vocab
@@ -131,7 +153,6 @@ def vocab_screen():
     global unanswered
     global screen
     global enter
-
     vocab = ""
     if HOME_BUTTON.draw(root):
         screen = "homescreen"
@@ -154,9 +175,53 @@ def vocab_screen():
         else:
             root.blit(font_h.render("false", True, RED), (WIDTH-300, HEIGHT/2))
         if WEITER_BUTTON.draw(root):
-            check_len()
+            if mode == "elimination":
+                check_elimination()
+            elif mode == "test":
+                check_test()
+            elif mode == "training":
+                check_training(answer)
 
-def check_len():
+def check_training(answer):
+    global random_vocab
+    global unanswered
+    global enter
+    global screen
+    df = pd.read_csv(f"{current_stack}.csv")
+    textinput.value = ""
+    enter = False
+    index_vocabs = df[df["german_word"] == random_vocab.get("german_word")].index.values.tolist()
+    if len(unanswered) != 0:
+        set_vocab()
+    else:
+        screen = "endscreen"
+    for index_vocab in index_vocabs:
+        if answer:
+            df.loc[index_vocab, "correct_in_a_row"] = int(df.loc[index_vocab, "correct_in_a_row"]) + 1
+            next_day = int(df.loc[index_vocab, "correct_in_a_row"]) * 2
+            df.loc[index_vocab, "date_of_next_question"] = date.today() + timedelta(next_day)
+        else:
+            df.loc[index_vocab, "correct_in_a_row"] = 0
+            df.loc[index_vocab, "date_of_next_question"] = date.today() + timedelta(1)
+    df.to_csv(path_or_buf=fr"C:\Users\Norwi\Desktop\Python\vocab_trainer\Trainer (2.0)\{current_stack}.csv", index=False)
+
+
+
+def check_test():      # What is next => unanswered vocab, end mode
+    global unanswered
+    global wrong
+    global enter
+    global screen
+    global number_vocabs
+    if number_vocabs < 10:
+        set_vocab()
+        number_vocabs +=1
+    else:
+        screen = "auswertung_test"        # wrong liste enthält alle falschen Vokabeln
+    textinput.value = ""
+    enter = False
+
+def check_elimination():   # What is next => unanswered vocab, wrong vocabs or back to homescreen
     global unanswered
     global wrong
     global enter
