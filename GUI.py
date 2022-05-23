@@ -4,7 +4,8 @@ import os
 import time
 from functions import Button
 import pygame_textinput as pginput
-import main
+import csv
+import random as rd
 
 #init
 pygame.init()
@@ -24,12 +25,15 @@ font_3 = pygame.font.SysFont("maiandragd", 20, italic=True)
 BLACK = (0, 0, 0)
 BLUE = (0, 150, 255)
 GREY = (0, 50, 0)
+GREEN = (0, 100, 100)
+RED = (255, 0, 0)
 
 #variables
 screen = "homescreen"
 current_stack = ""
 mode = ""
 textinput = pginput.TextInputVisualizer(font_object=font_h)
+enter = False
 
 #images
 background = pygame.transform.scale(pygame.image.load(os.path.join("materials", "background.png")), (WIDTH, HEIGHT))
@@ -45,7 +49,8 @@ TEST_MODE_BUTTON = Button(1 / 10 * WIDTH, 690, font_2.render("- Test mode", True
 HOME_BUTTON = Button(100, 100, font_2.render("Home", True, BLACK), 1)
 SETTINGS_BUTTON = Button(75, HEIGHT-120, settings_image, 1)
 BACK_BUTTON = Button(300, 100, font_2. render("Back", True, BLACK), 1)
-
+ENTER_BUTTON = Button(WIDTH-300, 690, font_1.render("Enter", True, BLACK), 1)
+WEITER_BUTTON = Button(WIDTH-300, 580, font_2.render("Weiter", True, BLACK), 1)
 
 
 def show_window():
@@ -95,6 +100,7 @@ def stackscreen():
     root.blit(font_3.render("This stack was created by Norwin at ...", True, GREY), (1 / 10 * WIDTH, 300))
     root.blit(font_1.render("Lernmodi:", True, BLACK), (2/15*WIDTH, 400))
     if ELIMINATION_MODE_BUTTON.draw(root):
+        set_lists()
         mode = "elimination"
         screen = "vocab_screen"
     if TRAINING_MODE_BUTTON.draw(root):
@@ -104,15 +110,71 @@ def stackscreen():
         mode = "test"
         screen = "vocab_screen"
 
+def set_lists():
+    global unanswered
+    global wrong
+    unanswered = []
+    wrong = []
+    with open(f"{current_stack}.csv", "r") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            unanswered.append(row)
+    set_vocab()
+
+def set_vocab():
+    global random_vocab
+    random_vocab = unanswered[rd.randint(0, len(unanswered) - 1)]
+
+
 def vocab_screen():
+    global wrong
+    global unanswered
     global screen
+    global enter
+
+    vocab = ""
     if HOME_BUTTON.draw(root):
         screen = "homescreen"
     if BACK_BUTTON.draw(root):
         screen = "stackscreen"
-    vocab = font_h.render("german", True, BLACK)
-    root.blit(vocab, (WIDTH/2-vocab.get_width()/2, 300))
-    root.blit(textinput.surface, (WIDTH/2 - textinput.surface.get_width()/2, 540))
+    vocab = font_h.render(random_vocab.get("german_word"), True, BLACK)
+    root.blit(vocab, (WIDTH / 2 - vocab.get_width() / 2, 300))
+    root.blit(textinput.surface, (WIDTH / 2 - textinput.surface.get_width() / 2, 540))
+    if ENTER_BUTTON.draw(root):
+        global answer
+        answer = True
+        if textinput.value != random_vocab.get("english_word"):
+            answer = False
+            wrong.append(random_vocab)
+        unanswered.remove(random_vocab)
+        enter = True
+    if enter:
+        if answer:
+            root.blit(font_h.render("richtig", True, GREEN), (WIDTH-300, HEIGHT/2))
+        else:
+            root.blit(font_h.render("false", True, RED), (WIDTH-300, HEIGHT/2))
+        if WEITER_BUTTON.draw(root):
+            check_len()
+
+def check_len():
+    global unanswered
+    global wrong
+    global enter
+    global screen
+    global random_vocab
+    if len(unanswered) > 0:
+        set_vocab()
+    elif len(wrong) > 0:
+        unanswered = [x for x in wrong]
+        wrong = []
+        set_vocab()
+    else:
+        screen = "stackscreen"
+    textinput.value = ""
+    enter = False
+
+
+
 
 def settings_screen():
     global screen
