@@ -1,3 +1,6 @@
 german_word,english_word,correct_in_a_row,date_of_next_question
-Hund,dog,0.0,2022-05-22
-Katze,cat,0.0,2022-05-22
+Hund,dog,1.0,2022-05-26
+Katze,cat,0.0,2022-05-25
+Hund,dog,1.0,2022-05-26
+Katze,cat,0.0,2022-05-25
+Hund,dog,0,2022-05-25

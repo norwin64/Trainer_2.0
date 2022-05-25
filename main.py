@@ -6,7 +6,6 @@ import random
 import pygame as pg
 
 
-
 def create_list():
     # What name should the list have
     name = input("Wie ist der Name der Liste? ")
