@@ -73,6 +73,9 @@ back_color = settings[0]
 f = False
 selected = 0
 test_number = int(settings[1])
+correct = 0
+add = 0
+restart_button = False
 
 
 #images
@@ -103,6 +106,9 @@ ADD_LIST_BUTTON = Button(3.56 / 10 * WIDTH, 610, font_2.render("+", True, GREEN)
 ADD_VOCAB_BUTTON = Button(WIDTH-300, HEIGHT-200, font_2.render("add_vocab", True, GREEN), 1)
 NEW_VOCAB_BUTTON = Button(WIDTH-320, HEIGHT-150, font_2.render("add vocab", True, GREEN), 0.8)
 CORRECT_BUTTON = Button(WIDTH/2-50, HEIGHT - 100, font_2.render("I knew this", True, BLACK), 1)
+RESTART_BUTTON = Button(2.8/10*WIDTH, 550, font_2.render("Restart", True, GREEN), 0.7)
+CONFIRM_BUTTON = Button(550, HEIGHT-350, font_2.render("Yes", True, GREEN), 1)
+DISPROVE_BUTTON = Button(750, HEIGHT-350, font_2.render("No", True, GREEN), 1)
 
 # Background Buttons
 COLOR_BUTTON_1 = Button(550, 220, grey_color, 0.5)
@@ -202,6 +208,8 @@ def edit_vocab_screen():
     global font_size_name
     if HOME_BUTTON.draw(root):
         screen="homescreen"
+    if BACK_BUTTON.draw(root):
+        screen = "stackscreen"
     # Rectangel in background
     pygame.draw.rect(root, WHITE, (1 / 10 * WIDTH, 200, WIDTH * 8 / 10, HEIGHT - 300))
     pygame.draw.rect(root, GREY, (1/10*WIDTH, 200, WIDTH*8/10, HEIGHT-300), width=5)
@@ -306,34 +314,61 @@ def stackscreen():
     global screen
     global field
     global enter
+    global add
+    global correct
+    global restart_button
+    correct = 0
     if HOME_BUTTON.draw(root):
         screen="homescreen"
     pygame.draw.rect(root, WHITE, (0.7 / 10 * WIDTH, 190, 470, 600))
     pygame.draw.rect(root, GREY, (0.7 / 10 * WIDTH, 190, 470, 600), width=5)
     root.blit(font_h.render(current_stack, True, BLACK), (1 / 10 * WIDTH, 210))
-    root.blit(font_3.render(f"This stack was created by has 100 elements", True, GREY), (0.9 / 10 * WIDTH, 300))
+    root.blit(font_3.render("", True, GREY), (0.9 / 10 * WIDTH, 300))
     root.blit(font_1.render("Lernmodi:", True, BLACK), (2/15*WIDTH, 400))
     set_lists()
     textinput.value = ""
     enter = False
     if ELIMINATION_MODE_BUTTON.draw(root):
+        add = 500 / len(unanswered)
         mode = "elimination"
         screen = "vocab_screen"
     if TRAINING_MODE_BUTTON.draw(root):
+        try:
+            add = 500 / len(check_current_tasks(current_stack))
+        except:
+            pass
         mode = "training"
         screen = "vocab_screen"
         set_lists()
+    if len(unanswered) < test_number:
+        root.blit(font_3.render("The dataset is not big enough", True, RED), (280, HEIGHT - 170))
+        pygame.draw.line(root, BLACK, (1 / 10 * WIDTH, 730), (2.5 / 10 * WIDTH, 690),width = 2)
     if TEST_MODE_BUTTON.draw(root):
         if len(unanswered) >= test_number:
+            add = 500 / 10
             mode = "test"
             screen = "vocab_screen"
-        else:
-            print("Sry, but the dataset is not big enough")
+
     if ADD_VOCAB_BUTTON.draw(root):
         screen = "edit_screen"
         field = ""
         listinput.value = current_stack
-
+    if RESTART_BUTTON.draw(root):
+        restart_button = True
+    if restart_button:
+        pygame.draw.rect(root, LIGHT_GREY, pygame.Rect(200, 200, WIDTH - 400, HEIGHT - 400))
+        pygame.draw.rect(root, GREY, pygame.Rect(200, 200, WIDTH-400, HEIGHT-400), width = 5)
+        root.blit(font_2.render("Are you sure, you want to restart your Training?", True, RED), (260, 300))
+        root.blit(font_2.render("All your progress will be deleted", True, RED), (320, 400))
+        if CONFIRM_BUTTON.draw(root):
+            restart_button = False
+            df = pd.read_csv(f"{current_stack}.csv")
+            for index in df.index:
+                df.replace(to_replace=(df.loc[df.index[index], 'date_of_next_question']), value = date.today(), inplace=True)
+                df.replace(to_replace=(df.loc[df.index[index], 'correct_in_a_row']), value=0, inplace=True)
+            df.to_csv(f"{current_stack}.csv")
+        if DISPROVE_BUTTON.draw(root):
+            restart_button = False
 
 def check_current_tasks(stacks):
     df = pd.read_csv(f"{stacks}.csv")
@@ -363,7 +398,7 @@ def set_lists():
                 set_vocab()
         else:
             for row in reader:
-                if row.get("date_of_next_question") == str(date.today()):
+                if row.get("date_of_next_question") <= str(date.today()):
                     unanswered.append(row)
             if len(unanswered) == 0:
                 screen = "all_finished"
@@ -383,7 +418,10 @@ def vocab_screen():
     global answer
     global v_size
     global e_size
+    global correct
     vocab = ""
+    pygame.draw.rect(root, LIGHT_GREEN, pygame.Rect(500, 100, correct, 40))
+    pygame.draw.rect(root, GREY, pygame.Rect(500, 100, 500, 40), width=3)
     if HOME_BUTTON.draw(root):
         screen = "homescreen"
     if BACK_BUTTON.draw(root):
@@ -414,6 +452,7 @@ def vocab_screen():
                 if CORRECT_BUTTON.draw(root):
                     answer = True
         else:
+            textinput.value = ""
             check_test()
         if WEITER_BUTTON.draw(root):
             if mode == "elimination":
@@ -428,10 +467,12 @@ def check_training(answer):
     global unanswered
     global enter
     global screen
+    global correct
     df = pd.read_csv(f"{current_stack}.csv")
     textinput.value = ""
     enter = False
     index_vocabs = df[df["german_word"] == random_vocab.get("german_word")].index.values.tolist()
+    correct += add
     if len(unanswered) != 0:
         set_vocab()
     else:
@@ -439,8 +480,13 @@ def check_training(answer):
     for index_vocab in index_vocabs:
         if answer:
             df.loc[index_vocab, "correct_in_a_row"] = int(df.loc[index_vocab, "correct_in_a_row"]) + 1
-            next_day = int(df.loc[index_vocab, "correct_in_a_row"]) * 2
-            df.loc[index_vocab, "date_of_next_question"] = date.today() + timedelta(next_day)
+            if df.loc[index_vocab, "correct_in_a_row"] <= 3:
+                next_day = int(df.loc[index_vocab, "correct_in_a_row"]) * 2
+                df.loc[index_vocab, "date_of_next_question"] = date.today() + timedelta(next_day)
+            else:
+                df.loc[index_vocab, "date_of_next_question"] = True
+
+
         else:
             df.loc[index_vocab, "correct_in_a_row"] = 0
             df.loc[index_vocab, "date_of_next_question"] = date.today() + timedelta(1)
@@ -453,20 +499,23 @@ def check_test():      # What is next => unanswered vocab, end mode
     global enter
     global screen
     global number_vocabs
+    global correct
+    correct += add
     if number_vocabs < test_number:
         set_vocab()
         number_vocabs +=1
     else:
         screen = "auswertung_test"        # wrong liste enthält alle falschen Vokabeln
-    textinput.value = ""
     enter = False
-
 def check_elimination():   # What is next => unanswered vocab, wrong vocabs or back to homescreen
     global unanswered
     global wrong
     global enter
     global screen
     global random_vocab
+    global correct
+    if answer == True:
+        correct += add
     if len(unanswered) > 0:
         set_vocab()
     elif len(wrong) > 0:
