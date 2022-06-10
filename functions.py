@@ -8,9 +8,7 @@ pg.init()
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-GREY = (161, 151, 142)
-y_scroll =  280
-scrolled = 0
+GREY = (201, 190, 180)
 
 #button class
 class Button():
@@ -121,6 +119,70 @@ class scrollable_list():
 			scrolled = 0
 		if scrolled >=overall*100:
 			scrolled = overall*100
+
+def blit_text(surface, text, pos, font, color=BLACK, border=50):
+    words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
+    space = font.size(' ')[0]  # The width of a space.
+    max_width, max_height = surface.get_size()
+    x, y = pos
+    lines = 1
+    for line in words:
+        for word in line:
+            word_surface = font.render(word, True, color)
+            word_width, word_height = word_surface.get_size()
+            if x + word_width >= max_width-border:
+                x = pos[0]  # Reset the x.
+                y += word_height + 4  # Start on new row.
+                lines += 1
+            surface.blit(word_surface, (x, y))
+            x += word_width + space
+        x = pos[0]  # Reset the x.
+        y += word_height  # Start on new row.
+
+
+arrow_down = pygame.transform.scale(pygame.image.load(os.path.join("materials", "arrow_down.png")), (20, 20))
+arrow_up = pygame.transform.scale(pygame.image.load(os.path.join("materials", "arrow_up.png")), (20, 20))
+
+
+class ScrollBar():
+	def __init__(self, data, font, Rect, font_color = BLACK, color_back=WHITE, color_scroll=GREY, color_frame=BLACK):
+		self.rect = Rect
+		self.data = data
+		self.font = font
+		self.font_color = font_color
+		self.color_frame = color_frame
+		self.color_back = color_back
+		self.color_scroll = color_scroll
+		self.y_scroll = self.rect[1] + 30
+		self.x, self.y, self.width, self.height = self.rect
+
+		self.arrow_up_button = Button(self.x+self.width-30+5, self.y+5, arrow_up, 1)
+		self.arrow_down_button = Button(self.x + self.width - 30+5, self.y+self.height-30+5, arrow_down, 1)
+
+	def draw(self, surface):
+
+		# Draw frame
+		pg.draw.rect(surface, self.color_back, self.rect)
+		pg.draw.rect(surface, self.color_frame, self.rect, width=3)
+		pg.draw.line(surface, self.color_frame, (self.rect[0]+self.rect[2]-30, self.rect[1]), (self.rect[0]+self.rect[2]-30, self.rect[1]+self.rect[3]), width=2)
+
+		# Draw elements in area
+		index = -5
+		for element in self.data:
+			if self.y+20*index+30 <= self.y+self.height and self.y+20*index >= self.y:
+				surface.blit(self.font.render(element.get("german_word"), True, self.font_color), (self.x+20, self.y+20*index))
+				index += 1
+		
+		# draw Scroll box
+		height_scroll = (self.height - 60) * (index / len(self.data))
+		pg.draw.rect(surface, self.color_scroll, pg.Rect(self.rect[0] + self.rect[2] - 27, self.y_scroll, 23, height_scroll))
+		pg.draw.rect(surface, self.color_frame,pg.Rect(self.rect[0] + self.rect[2] - 27, self.y_scroll, 23, height_scroll), width=1)
+
+		# Draw arrows up /down
+		if self.arrow_up_button.draw(surface):
+			pass
+		if self.arrow_down_button.draw(surface):
+			pass
 
 
 
