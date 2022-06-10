@@ -19,7 +19,7 @@ pygame.init()
 pygame.key.set_repeat(200, 25)   # Holding key repeats the action
 
 #root
-root = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+root = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
 FPS = 60
 WIDTH,HEIGHT = root.get_width(), root.get_height()
 
@@ -88,61 +88,61 @@ restart_button = False          # is restart training button activ or not
 
 
 #images
-background_2 = pygame.transform.scale(pygame.image.load(os.path.join("materials", "background_2.png")), (WIDTH-100, HEIGHT-100))
-exit_image = pygame.transform.scale(pygame.image.load(os.path.join("materials", "exit.png")), (70, 70))
-settings_image = pygame.transform.scale(pygame.image.load(os.path.join("materials", "settings.png")), (50, 50))
-tasks_back = pygame.transform.scale(pygame.image.load(os.path.join("materials", "tasks_back.png")), (700, 530))
+background_2 = pygame.transform.scale(pygame.image.load(os.path.join("materials", "background_2.png")), (1340/1440*WIDTH, 800/900*HEIGHT))
+exit_image = pygame.transform.scale(pygame.image.load(os.path.join("materials", "exit.png")), (70/1440*WIDTH, 70/900*HEIGHT))
+settings_image = pygame.transform.scale(pygame.image.load(os.path.join("materials", "settings.png")), (50/1440*WIDTH, 50/900*HEIGHT))
+tasks_back = pygame.transform.scale(pygame.image.load(os.path.join("materials", "tasks_back.png")), (700/1440*WIDTH, 530/900*HEIGHT))
 grey_color = pygame.image.load(os.path.join("materials", "background_color_grey.png"))
 green_color = pygame.image.load(os.path.join("materials", "background_color_green.png"))
 light_green_color = pygame.image.load(os.path.join("materials", "background_color_lightgreen.png"))
 lila_color = pygame.image.load(os.path.join("materials", "background_color_lila.png"))
 red_color = pygame.image.load(os.path.join("materials", "background_color_red.png"))
-arrow_up = pygame.transform.scale(pygame.image.load(os.path.join("materials", "arrow_up.png")), (30, 30))
-arrow_down = pygame.transform.scale(pygame.image.load(os.path.join("materials", "arrow_down.png")), (30, 30))
+arrow_up = pygame.transform.scale(pygame.image.load(os.path.join("materials", "arrow_up.png")), (30/1440*WIDTH, 30/900*HEIGHT))
+arrow_down = pygame.transform.scale(pygame.image.load(os.path.join("materials", "arrow_down.png")), (30/1440*WIDTH, 30/900*HEIGHT))
 figure = pygame.image.load(os.path.join("materials", "figure.png"))
 
 # Buttons
 # overall
-EXIT_BUTTON = Button(WIDTH-140, 70, exit_image, 1)
-HOME_BUTTON = Button(100, 100, font_2.render("Home", True, BLACK), 1)
-BACK_BUTTON = Button(300, 100, font_2. render("Back", True, BLACK), 1)
+EXIT_BUTTON = Button(WIDTH-140/1440*WIDTH, 70/900*HEIGHT, exit_image, 1)
+HOME_BUTTON = Button(100/1440*WIDTH, 100/900*HEIGHT, font_2.render("Home", True, BLACK), 1)
+BACK_BUTTON = Button(300/1440*WIDTH, 100/900*HEIGHT, font_2. render("Back", True, BLACK), 1)
 # home
-MORE_STACKS_BUTTON = Button(1 / 10 * WIDTH, 700, font_2.render("Click here for more units", True, BLUE), 0.8)
-SETTINGS_BUTTON = Button(75, HEIGHT-120, settings_image, 1)
-ADD_LIST_BUTTON = Button(0.356*WIDTH, 610, font_2.render("+", True, DARK_GREEN), 1.5)
+MORE_STACKS_BUTTON = Button(1 / 10 * WIDTH, 700/900*HEIGHT, font_2.render("Click here for more units", True, BLUE), 0.8)
+SETTINGS_BUTTON = Button(75/1440*WIDTH, HEIGHT-120/900*HEIGHT, settings_image, 1)
+ADD_LIST_BUTTON = Button(325/1440*WIDTH, 610/900*HEIGHT, font_2.render("+", True, DARK_GREEN), 1.5)
 # settings
 # Background Buttons
-COLOR_BUTTON_1 = Button(550, 220, grey_color, 0.5)
-COLOR_BUTTON_2 = Button(650, 220, green_color, 0.5)
-COLOR_BUTTON_3 = Button(750, 220, light_green_color, 0.5)
-COLOR_BUTTON_4 = Button(850, 220, lila_color, 0.5)
-COLOR_BUTTON_5 = Button(950, 220, red_color, 0.5)
+COLOR_BUTTON_1 = Button(550/1440*WIDTH, 220/900*HEIGHT, grey_color, 0.5)
+COLOR_BUTTON_2 = Button(650/1440*WIDTH, 220/900*HEIGHT, green_color, 0.5)
+COLOR_BUTTON_3 = Button(750/1440*WIDTH, 220/900*HEIGHT, light_green_color, 0.5)
+COLOR_BUTTON_4 = Button(850/1440*WIDTH, 220/900*HEIGHT, lila_color, 0.5)
+COLOR_BUTTON_5 = Button(950/1440*WIDTH, 220/900*HEIGHT, red_color, 0.5)
 
 # Font Buttons
-FONT_BUTTON = Button(300, 350, font_2.render(f"{current_font}                     ", True, BLACK), 1)
-FONT_1 = Button(330, 400, pygame.font.SysFont("Arial", 40).render(f"Arial         ", True, BLACK), 1)
-FONT_2 = Button(330, 450, pygame.font.SysFont("Calibri", 40).render(f"Calibri       ", True, BLACK), 1)
-FONT_3 = Button(330, 500, pygame.font.SysFont("maiandragd", 40).render(f"maiandragd    ", True, BLACK), 1)
-FONT_4 = Button(330, 550, pygame.font.SysFont("MV Boli", 40).render(f"MV Boli       ", True, BLACK), 1)
+FONT_BUTTON = Button(300/1440*WIDTH, 350/900*HEIGHT, font_2.render(f"{current_font}                                ", True, BLACK), 1)
+FONT_1 = Button(330/1440*WIDTH, 400/900*HEIGHT, pygame.font.SysFont("Arial", 40).render(f"Arial         ", True, BLACK), 1)
+FONT_2 = Button(330/1440*WIDTH, 450/900*HEIGHT, pygame.font.SysFont("Calibri", 40).render(f"Calibri       ", True, BLACK), 1)
+FONT_3 = Button(330/1440*WIDTH, 500/900*HEIGHT, pygame.font.SysFont("maiandragd", 40).render(f"maiandragd    ", True, BLACK), 1)
+FONT_4 = Button(330/1440*WIDTH, 550/900*HEIGHT, pygame.font.SysFont("MV Boli", 40).render(f"MV Boli       ", True, BLACK), 1)
 
 # Words in tests
-BUTTON_10 = Button(500, 470, font_2.render("10", True, BLACK), 1)
-BUTTON_15 = Button(600, 470, font_2.render("15", True, BLACK), 1)
-BUTTON_30 = Button(700, 470, font_2.render("30", True, BLACK), 1)
-BUTTON_50 = Button(800, 470, font_2.render("50", True, BLACK), 1)
+BUTTON_10 = Button(500/1440*WIDTH, 470/900*HEIGHT, font_2.render("10", True, BLACK), 1)
+BUTTON_15 = Button(600/1440*WIDTH, 470/900*HEIGHT, font_2.render("15", True, BLACK), 1)
+BUTTON_30 = Button(700/1440*WIDTH, 470/900*HEIGHT, font_2.render("30", True, BLACK), 1)
+BUTTON_50 = Button(800/1440*WIDTH, 470/900*HEIGHT, font_2.render("50", True, BLACK), 1)
 # stack
-ELIMINATION_MODE_BUTTON = Button(1 / 10 * WIDTH, 470, font_2.render("- Elimination mode", True, BLACK), 1)
-TRAINING_MODE_BUTTON = Button(1 / 10 * WIDTH, 580, font_2.render("- Training mode", True, BLACK), 1)
-TEST_MODE_BUTTON = Button(1 / 10 * WIDTH, 690, font_2.render("- Test mode", True, BLACK), 1)
-ADD_VOCAB_BUTTON = Button(WIDTH - 300, HEIGHT - 200, font_2.render("add_vocab", True, DARK_GREEN), 1)
-CONFIRM_BUTTON = Button(550, HEIGHT - 350, font_2.render("Yes", True, DARK_GREEN), 1)
-DISPROVE_BUTTON = Button(750, HEIGHT - 350, font_2.render("No", True, DARK_GREEN), 1)
+ELIMINATION_MODE_BUTTON = Button(1 / 10 * WIDTH, 470/900*HEIGHT, font_2.render("- Elimination mode", True, BLACK), 1)
+TRAINING_MODE_BUTTON = Button(1 / 10 * WIDTH, 580/900*HEIGHT, font_2.render("- Training mode", True, BLACK), 1)
+TEST_MODE_BUTTON = Button(1 / 10 * WIDTH, 690/900*HEIGHT, font_2.render("- Test mode", True, BLACK), 1)
+ADD_VOCAB_BUTTON = Button(WIDTH - 300/1440*WIDTH, HEIGHT - 200/900*HEIGHT, font_2.render("add_vocab", True, DARK_GREEN), 1)
+CONFIRM_BUTTON = Button(550/1440*WIDTH, HEIGHT - 350/900*HEIGHT, font_2.render("Yes", True, DARK_GREEN), 1)
+DISPROVE_BUTTON = Button(750/1440*WIDTH, HEIGHT - 350/900*HEIGHT, font_2.render("No", True, DARK_GREEN), 1)
 # edit
-NEW_VOCAB_BUTTON = Button(WIDTH - 320, HEIGHT - 150, font_2.render("add vocab", True, DARK_GREEN), 0.8)
+NEW_VOCAB_BUTTON = Button(WIDTH/1440*WIDTH - 320, HEIGHT - 150, font_2.render("add vocab", True, DARK_GREEN), 0.8)
 # vocab
-ENTER_BUTTON = Button(WIDTH-300, 690, font_1.render("Enter", True, BLACK), 1)
-WEITER_BUTTON = Button(WIDTH-300, 800, font_2.render("Weiter", True, BLACK), 1)
-CORRECT_BUTTON = Button(WIDTH/2-50, HEIGHT - 100, font_2.render("I knew this", True, BLACK), 1)
+ENTER_BUTTON = Button(WIDTH-300/1440*WIDTH, 690/900*HEIGHT, font_1.render("Enter", True, BLACK), 1)
+WEITER_BUTTON = Button(WIDTH-300/1440*WIDTH, 800/900*HEIGHT, font_2.render("Weiter", True, BLACK), 1)
+CORRECT_BUTTON = Button(WIDTH/2-50/1440*WIDTH, HEIGHT - 100/900*HEIGHT, font_2.render("I knew this", True, BLACK), 1)
 
 
 def show_window():
@@ -150,7 +150,7 @@ def show_window():
     global listinput
     background = pygame.Rect(0, 0, WIDTH, HEIGHT)
     pygame.draw.rect(root, back_color, background)
-    root.blit(background_2, (50, 50))
+    root.blit(background_2, (50/1440*WIDTH, 50/900*HEIGHT))
     if EXIT_BUTTON.draw(root):
         quit()
     if screen == "homescreen":
@@ -179,13 +179,13 @@ def homescreen():
     tasks = []
     if SETTINGS_BUTTON.draw(root):
         screen = "settings_screen"
-    pygame.draw.rect(root, WHITE, (0.7/10*WIDTH, 190, 470, 500))
-    pygame.draw.rect(root, DARK_GREY, (0.7 / 10 * WIDTH, 190, 470, 500), width = 5)
-    root.blit(tasks_back, (4.7 / 10 * WIDTH, 190))
+    pygame.draw.rect(root, WHITE, (0.7/10*WIDTH, 190/900*HEIGHT, 470/1440*WIDTH, 500/900*HEIGHT))
+    pygame.draw.rect(root, DARK_GREY, (0.7 / 10 * WIDTH, 190/900*HEIGHT, 470/1440*WIDTH, 500/900*HEIGHT), width = 5)
+    root.blit(tasks_back, (4.7 / 10 * WIDTH, 190/900*HEIGHT))
     # "Your stacks"
-    root.blit(font_h.render("Your units", True, BLACK), (1/10 * WIDTH, 210))
-    root.blit(font_1.render("Your tasks", True, BLACK), (5.8/10 * WIDTH, 300))
-    root.blit(font_2.render("Today", True, BLACK), (7/10 * WIDTH, 220))
+    root.blit(font_h.render("Your units", True, BLACK), (1.4/10 * WIDTH, 210/900*HEIGHT))
+    root.blit(font_1.render("Your tasks", True, BLACK), (6.3/10 * WIDTH, 300/900*HEIGHT))
+    root.blit(font_2.render("Today", True, BLACK), (7/10 * WIDTH, 220/900*HEIGHT))
 
     if ADD_LIST_BUTTON.draw(root):
         screen = "edit_screen"
@@ -197,10 +197,10 @@ def homescreen():
     for element in stacks:
         if stacks.index(element) <= 4:
             spot = 320 + 70 * stacks.index(element)
-            BUTTON = Button(2/10*WIDTH-30, spot, font_2.render(f"{element}", True, BLACK), 1)
+            BUTTON = Button(1.9/10*WIDTH, spot/900*HEIGHT, font_2.render(f"{element}", True, BLACK), 1)
             if len(check_current_tasks(element)) != 0:
                 tasks.append(element)
-                BUTTON_TASK = Button(820, 340 + 68  * len(tasks), font_2.render(f"{element}      {len(check_current_tasks(element))} vocabs", True, BLACK), 1)
+                BUTTON_TASK = Button(870/1440*WIDTH, (320 + 68  * len(tasks))/900*HEIGHT, font_2.render(f"{element}      {len(check_current_tasks(element))} vocabs", True, BLACK), 1)
                 if BUTTON_TASK.draw(root):
                     current_stack = element
                     screen = "vocab_screen"
@@ -224,7 +224,7 @@ def settings_screen():
     global selected
     if HOME_BUTTON.draw(root):
         screen = "homescreen"
-    root.blit(font_2.render("Words in Test: ", True, BLACK), (150, 470))
+    root.blit(font_2.render("Words in Test: ", True, BLACK), (150/1440*WIDTH, 470/900*HEIGHT))
     if BUTTON_10.draw(root):
         settings[1] = 10
     if BUTTON_15.draw(root):
@@ -234,14 +234,14 @@ def settings_screen():
     if BUTTON_50.draw(root):
         settings[1] = 50
     if settings[1] == 10:
-        pygame.draw.line(root, DARK_GREEN, (500, 530), (545, 530), width = 10)
+        pygame.draw.line(root, DARK_GREEN, (500/1440*WIDTH, 530/900*HEIGHT), (545/1440*WIDTH, 530/900*HEIGHT), width = 10)
     elif settings[1] == 15:
-        pygame.draw.line(root, DARK_GREEN, (600, 530), (645, 530), width = 10)
+        pygame.draw.line(root, DARK_GREEN, (600/1440*WIDTH, 530/900*HEIGHT), (645/1440*WIDTH, 530/900*HEIGHT), width = 10)
     elif settings[1] == 30:
-        pygame.draw.line(root, DARK_GREEN, (700, 530), (745, 530), width = 10)
+        pygame.draw.line(root, DARK_GREEN, (700/1440*WIDTH, 530/900*HEIGHT), (745/1440*WIDTH, 530/900*HEIGHT), width = 10)
     elif settings[1] == 50:
-        pygame.draw.line(root, DARK_GREEN, (800, 530), (845, 530), width = 10)
-    root.blit(font_2.render("background color: ", True, BLACK), (150, 230))
+        pygame.draw.line(root, DARK_GREEN, (800/1440*WIDTH, 530/900*HEIGHT), (845/1440*WIDTH, 530/900*HEIGHT), width = 10)
+    root.blit(font_2.render("background color: ", True, BLACK), (150/1440*WIDTH, 230/900*HEIGHT))
     if COLOR_BUTTON_1.draw(root):
         back_color = GREY_1
         settings[0] = GREY_1
@@ -257,18 +257,18 @@ def settings_screen():
     if COLOR_BUTTON_5.draw(root):
         back_color = RED
         settings[0] = RED
-    pygame.draw.rect(root, LIGHT_GREY, pygame.Rect(295, 350, 403, 50))
-    pygame.draw.rect(root, DARK_GREY, pygame.Rect(295, 350, 403, 50), width = 2)
-    root.blit(font_2.render("font: ", True, BLACK), (150, 350))
-    root.blit(arrow_down, (657, 360))
+    pygame.draw.rect(root, LIGHT_GREY, pygame.Rect(295/1440*WIDTH, 350/900*HEIGHT, 403/1440*WIDTH, 50/900*HEIGHT))
+    pygame.draw.rect(root, DARK_GREY, pygame.Rect(295/1440*WIDTH, 350/900*HEIGHT, 403/1440*WIDTH, 50/900*HEIGHT), width = 2)
+    root.blit(font_2.render("font: ", True, BLACK), (150/1440*WIDTH, 350/900*HEIGHT))
+    root.blit(arrow_down, (657/1440*WIDTH, 360/900*HEIGHT))
     if FONT_BUTTON.draw(root):
         font_unfold_settings = (True if font_unfold_settings == False else False)
     if font_unfold_settings:
-        pygame.draw.rect(root, WHITE, pygame.Rect(295, 400, 403, 260))
-        pygame.draw.rect(root, DARK_GREY, pygame.Rect(295, 400, 403, 260), width=1)
-        root.blit(arrow_up, (657, 360))
-        root.blit(font_4.render("Please Restart the game", True, RED), (350, HEIGHT - 290))
-        root.blit(font_4.render("to see the new font", True, RED), (355, HEIGHT - 275))
+        pygame.draw.rect(root, WHITE, pygame.Rect(295/1440*WIDTH, 400/900*HEIGHT, 403, 260/900*HEIGHT))
+        pygame.draw.rect(root, DARK_GREY, pygame.Rect(295/1440*WIDTH, 400/900*HEIGHT, 403, 260/900*HEIGHT), width=1)
+        root.blit(arrow_up, (657/1440*WIDTH, 360/900*HEIGHT))
+        root.blit(font_4.render("Please Restart the game", True, RED), (350/1440*WIDTH, HEIGHT - 290/900*HEIGHT))
+        root.blit(font_4.render("to see the new font", True, RED), (355/1440*WIDTH, HEIGHT - 275/900*HEIGHT))
         if FONT_1.draw(root):
             with open("settings_font.txt", "w") as file:
                 writer = file.write("Arial")
@@ -286,13 +286,13 @@ def settings_screen():
                 writer = file.write("MV Boli")
                 selected = 4
         if selected == 1:
-            pygame.draw.circle(root, BLACK, (310, 425), 8)
+            pygame.draw.circle(root, BLACK, (310/1440*WIDTH, 425/900*HEIGHT), 8)
         elif selected == 2:
-            pygame.draw.circle(root, BLACK, (310, 475), 8)
+            pygame.draw.circle(root, BLACK, (310/1440*WIDTH, 475/900*HEIGHT), 8)
         elif selected == 3:
-            pygame.draw.circle(root, BLACK, (310, 525), 8)
+            pygame.draw.circle(root, BLACK, (310/1440*WIDTH, 525/900*HEIGHT), 8)
         elif selected == 4:
-            pygame.draw.circle(root, BLACK, (310, 575), 8)
+            pygame.draw.circle(root, BLACK, (310/1440*WIDTH, 575/900*HEIGHT), 8)
 
 def stackscreen():
     global mode
@@ -305,40 +305,40 @@ def stackscreen():
     correct = 0
     if HOME_BUTTON.draw(root):
         screen="homescreen"
-    root.blit(figure, (7/10 * WIDTH, 250))
+    root.blit(figure, (7/10 * WIDTH, 250/900*HEIGHT))
     # shows explanation of mode
     pos = pygame.mouse.get_pos()
-    back_info = pygame.Rect(6 / 10 * WIDTH, 190, 450, 500)
+    back_info = pygame.Rect(6 / 10 * WIDTH, 190/900*HEIGHT, 450/1440*WIDTH, 500/900*HEIGHT)
     if ELIMINATION_MODE_BUTTON.rect.collidepoint(pos):
         pygame.draw.rect(root, WHITE, back_info)
         pygame.draw.rect(root, DARK_GREY, back_info, width=2)
-        root.blit(font_2.render("Elimination Mode", True, BLACK), (6/10*WIDTH+60, 220))
+        root.blit(font_2.render("Elimination Mode", True, BLACK), (6/10*WIDTH+60, 220/900*HEIGHT))
         elimination_text = "In this mode you will go random through every single word out of the list. \nIf you catch a word right it will be eliminated for the rest of the unit. If your input is wrong the vocab will be requested again later. "
-        blit_text(root, text=elimination_text,color=BLACK, pos=(6/10*WIDTH+20, 300), font=font_4, border=125)
+        blit_text(root, text=elimination_text,color=BLACK, pos=(6/10*WIDTH+20, 300/900*HEIGHT), font=font_4, border=125/1440*WIDTH)
     elif TRAINING_MODE_BUTTON.rect.collidepoint(pos):
         pygame.draw.rect(root, WHITE, back_info)
         pygame.draw.rect(root, DARK_GREY, back_info, width=2)
-        root.blit(font_2.render("Training Mode", True, BLACK), (6 / 10 * WIDTH + 60, 220))
+        root.blit(font_2.render("Training Mode", True, BLACK), (6 / 10 * WIDTH + 60, 220/900*HEIGHT))
         training_text = "This mode goes over several days. If you start this mode every single vocab of the set will be scheduled for today. After typing a wrong answer you have to answer the question tomorrow again. If your answer was correct the vocab will be scheduled 2/3/6 days later again.\n\ntimes in a row correct:\n 1 = + 2 days\n 2 = + 4 days\n 3 = + 6 days"
         if current_font == "MV Boli":
-            blit_text(root, text=training_text,color=BLACK, pos=(6/10*WIDTH+20, 300), font=font_5, border=125)
+            blit_text(root, text=training_text,color=BLACK, pos=(6/10*WIDTH+20, 300/900*HEIGHT), font=font_5, border=125/1440*WIDTH)
         else:
-            blit_text(root, text=training_text,color=BLACK, pos=(6/10*WIDTH+20, 300), font=font_4, border=125)
+            blit_text(root, text=training_text,color=BLACK, pos=(6/10*WIDTH+20, 300/900*HEIGHT), font=font_4, border=125/1440*WIDTH)
 
     elif TEST_MODE_BUTTON.rect.collidepoint(pos):
         pygame.draw.rect(root, WHITE, back_info)
         pygame.draw.rect(root, DARK_GREY, back_info, width=2)
-        root.blit(font_2.render("Test Mode", True, BLACK), (6 / 10 * WIDTH + 60, 220))
+        root.blit(font_2.render("Test Mode", True, BLACK), (6 / 10 * WIDTH + 60, 220/900*HEIGHT))
         test_text = f"         Check your knowledge!!!\n\nIn this mode you get {settings[1]} words. While answering the words you do not know whether your answer was correct or not. Only when you finished the words you´ll get a overview of your results. "
-        blit_text(root, text=test_text, color=BLACK, pos=(6 / 10 * WIDTH + 20, 300), font=font_4, border=125)
+        blit_text(root, text=test_text, color=BLACK, pos=(6 / 10 * WIDTH + 20, 300/900*HEIGHT), font=font_4, border=125/1440*WIDTH)
         if len(unanswered) < test_number:
-            root.blit(font_4.render("The dataset is not big enough", True, RED), (920, HEIGHT - 300))
+            root.blit(font_4.render("The dataset is not big enough", True, RED), (920/1440*WIDTH, 600/900*HEIGHT))
 
-    pygame.draw.rect(root, WHITE, (0.7 / 10 * WIDTH, 190, 470, 600))
-    pygame.draw.rect(root, DARK_GREY, (0.7 / 10 * WIDTH, 190, 470, 600), width=5)
-    root.blit(font_h.render(current_stack, True, BLACK), (1 / 10 * WIDTH, 210))
-    root.blit(font_4.render("", True, DARK_GREY), (0.9 / 10 * WIDTH, 300))
-    root.blit(font_1.render("Lernmodi:", True, BLACK), (2/15*WIDTH, 400))
+    pygame.draw.rect(root, WHITE, (0.7 / 10 * WIDTH, 190/900*HEIGHT, 470/1440*WIDTH, 600/900*HEIGHT))
+    pygame.draw.rect(root, DARK_GREY, (0.7 / 10 * WIDTH, 190/900*HEIGHT, 470/1440*WIDTH, 600/900*HEIGHT), width=5)
+    root.blit(font_h.render(current_stack, True, BLACK), (1 / 10 * WIDTH, 210/900*HEIGHT))
+    root.blit(font_4.render("", True, DARK_GREY), (0.9 / 10 * WIDTH, 300/900*HEIGHT))
+    root.blit(font_1.render("Lernmodi:", True, BLACK), (2/15*WIDTH, 400/900*HEIGHT))
     set_lists()
     textinput.value = ""
     enter = False
@@ -364,14 +364,14 @@ def stackscreen():
         field = ""
         listinput.value = current_stack
     start = "Start"
-    RESTART_BUTTON = Button(2.8 / 10 * WIDTH, 550, font_2.render(start, True, DARK_GREEN), 0.7)
+    RESTART_BUTTON = Button(2.8 / 10 * WIDTH, 550/900*HEIGHT, font_2.render(start, True, DARK_GREEN), 0.7)
     if RESTART_BUTTON.draw(root):
         restart_button = True
     if restart_button:
-        pygame.draw.rect(root, LIGHT_GREY, pygame.Rect(200, 200, WIDTH - 400, HEIGHT - 400))
-        pygame.draw.rect(root, DARK_GREY, pygame.Rect(200, 200, WIDTH - 400, HEIGHT - 400), width = 5)
-        root.blit(font_2.render("Are you sure, you want to restart your Training?", True, RED), (260, 300))
-        root.blit(font_2.render("All your progress will be deleted", True, RED), (320, 400))
+        pygame.draw.rect(root, LIGHT_GREY, pygame.Rect(200/1440*WIDTH, 200/900*HEIGHT, 1040/1440*WIDTH, 500/900*HEIGHT))
+        pygame.draw.rect(root, DARK_GREY, pygame.Rect(200/1440*WIDTH, 200/900*HEIGHT, 1040/1440*WIDTH, 500/900*HEIGHT), width = 5)
+        root.blit(font_2.render("Are you sure, you want to restart your Training?", True, RED), (260/1440*WIDTH, 300/900*HEIGHT))
+        root.blit(font_2.render("All your progress will be deleted", True, RED), (320/1440*WIDTH, 400/900*HEIGHT))
         if CONFIRM_BUTTON.draw(root):
             restart_button = False
             df = pd.read_csv(f"{current_stack}.csv")
@@ -393,8 +393,8 @@ def edit_vocab_screen():
     if BACK_BUTTON.draw(root):
         screen = "stackscreen"
     # Rectangel in background
-    pygame.draw.rect(root, WHITE, (1 / 10 * WIDTH, 200, WIDTH * 8 / 10, HEIGHT - 300))
-    pygame.draw.rect(root, DARK_GREY, (1 / 10 * WIDTH, 200, WIDTH * 8 / 10, HEIGHT - 300), width=5)
+    pygame.draw.rect(root, WHITE, (1 / 10 * WIDTH, 200/900*HEIGHT, WIDTH * 8 / 10, 600/900*HEIGHT))
+    pygame.draw.rect(root, DARK_GREY, (1 / 10 * WIDTH, 200/900*HEIGHT, WIDTH * 8 / 10, 600/900*HEIGHT), width=5)
     # Name of the unit
     rect_name = pygame.Rect(WIDTH / 2 - 210, 250, 400, 100)
     rect_german = pygame.Rect(WIDTH/6-10, 400, german_input.surface.get_width()+10 if german_input.surface.get_width() > 200 else 200, 50)
@@ -465,8 +465,8 @@ def vocab_screen():
     global e_size
     global correct
     vocab = ""
-    pygame.draw.rect(root, LIGHT_GREEN, pygame.Rect(500, 100, correct, 40))
-    pygame.draw.rect(root, DARK_GREY, pygame.Rect(500, 100, 500, 40), width=3)
+    pygame.draw.rect(root, LIGHT_GREEN, pygame.Rect(500/1440*WIDTH, 100/900*HEIGHT, correct/1440*WIDTH, 40/900*HEIGHT))
+    pygame.draw.rect(root, DARK_GREY, pygame.Rect(500/1440*WIDTH, 100/900*HEIGHT, 500/1440*WIDTH, 40/900*HEIGHT), width=3)
     if HOME_BUTTON.draw(root):
         screen = "homescreen"
     if BACK_BUTTON.draw(root):
@@ -475,8 +475,8 @@ def vocab_screen():
     vocab = font_v.render(random_vocab.get("german_word"), True, BLACK)
     if vocab.get_width() >= WIDTH-100:
         v_size -= 10
-    root.blit(vocab, (WIDTH / 2 - vocab.get_width() / 2, 300))
-    root.blit(textinput.surface, (WIDTH / 2 - textinput.surface.get_width() / 2, 540))
+    root.blit(vocab, (WIDTH / 2 - vocab.get_width() / 2, 300/900*HEIGHT))
+    root.blit(textinput.surface, (WIDTH / 2 - textinput.surface.get_width() / 2, 540/900*HEIGHT))
     if enter == False:
         if ENTER_BUTTON.draw(root):
             answer = True
@@ -488,12 +488,12 @@ def vocab_screen():
     if enter:
         if mode != "test":
             if answer:
-                root.blit(font_h.render("richtig", True, DARK_GREEN), (250, HEIGHT * 3 / 4))
+                root.blit(font_h.render("richtig", True, DARK_GREEN), (250/1440*WIDTH, HEIGHT * 3 / 4))
             else:
-                root.blit(font_h.render("false", True, RED), (250, HEIGHT*3/4))
+                root.blit(font_h.render("false", True, RED), (250/1440*WIDTH, HEIGHT*3/4))
                 font_e = pygame.font.SysFont(current_font, e_size)
                 english_vocab = font_e.render(random_vocab.get("english_word"), True, DARK_GREEN)
-                root.blit(english_vocab, (WIDTH/2-english_vocab.get_width()/2, 470))
+                root.blit(english_vocab, (WIDTH/2-english_vocab.get_width()/2, 470/900*HEIGHT))
                 if CORRECT_BUTTON.draw(root):
                     answer = True
         else:
@@ -513,11 +513,11 @@ def auswertung_test_screen():
         screen="homescreen"
     if BACK_BUTTON.draw(root):
         screen = "stackscreen"
-    back_result = pygame.Rect(430, 190, 590, 180)
+    back_result = pygame.Rect(430/1440*WIDTH, 190/900*HEIGHT, 590/1440*WIDTH, 180/900*HEIGHT)
     pygame.draw.rect(root, LIGHT_GREY, back_result)
     pygame.draw.rect(root, BLACK, back_result, width=5)
-    root.blit(font_huge.render(f"{str(test_number - len(wrong))} von {str(test_number)}", True, BLACK), (450, 200))
-    ScrollBar(wrong, font_4, (500, 500, 500, 300)).draw(root)
+    root.blit(font_huge.render(f"{str(test_number - len(wrong))} von {str(test_number)}", True, BLACK), (450/1440*WIDTH, 200/900*HEIGHT))
+    ScrollBar(wrong, font_4, (500/1440*WIDTH, 500/900*HEIGHT, 500/1440*WIDTH, 300/900*HEIGHT)).draw(root)
 
 
 

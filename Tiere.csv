@@ -1,9 +1,12 @@
-Unnamed: 0.11,Unnamed: 0.10,Unnamed: 0.9,Unnamed: 0.8,Unnamed: 0.7,Unnamed: 0.6,Unnamed: 0.5,Unnamed: 0.4,Unnamed: 0.3,Unnamed: 0.2,Unnamed: 0.1,Unnamed: 0,german_word,english_word,correct_in_a_row,date_of_next_question
-0,0,0,0,0,0,0,0,0,0,0,0,Hund,dog,1,2022-05-31
-1,0,0,0,0,0,0,0,0,0,0,0,Katze,cat,1,2022-05-31
-2,2,2,2,2,2,2,2,2,2,2,2,Maus,mice,1,2022-05-31
-3,3,3,3,3,3,3,3,3,3,3,3,Hase,bunny,1,2022-05-31
-4,4,4,4,4,4,4,4,4,0,0,0,Kangaroo,kangaroo,1,2022-05-31
-5,5,5,5,5,5,5,5,5,5,5,5,Vogel,bird,1,2022-05-31
-6,6,6,6,6,6,6,6,6,6,6,6,Meerschweinchen,guinnee pig,1,2022-05-31
-7,7,7,7,7,7,7,7,7,7,7,7,Hamster,hamster,1,2022-05-31
+german_word,english_word,correct_in_a_row,date_of_next_question
+Hund,dog,0,2022-06-10
+Meerschweinchen,guinnee pig,0,2022-06-10
+hamster,hamster,0,2022-06-10
+Vogel,bird,0,2022-06-10
+Fisch,fish,0,2022-06-10
+Muschel,shell,0,2022-06-10
+Panda,panda,0,2022-06-10
+Hase,bunny,0,2022-06-10
+Zwerg,dwarf,0,2022-06-10
+Ork,orc,0,2022-06-10
+Mensch,human,0,2022-06-10
