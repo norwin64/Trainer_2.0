@@ -2,8 +2,8 @@
 
 This is my vocab trainer 2.0. 
 
-## In addition to the first version i added a **Graphical user interface**, 
-which contains ``several screens``.
+## In addition to the first version i added a **Graphical user interface**
+which contains following ``screens``:
 - Homescreen
 - stack-screeen
 - edit_vocab_screen
